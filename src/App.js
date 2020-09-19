@@ -1,18 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Editor from './components/Editor';
 
 function App() {
   const [html, setHtml] = useState('');
   const [css, setCss] = useState('');
   const [javascript, setJavascript] = useState('');
+  const [srcDoc, setSrcDoc] = useState('');
 
-  const srcDoc = `
-    <html>
-    <body>${html}</body>
-    <style>${css}</style>
-    <script>${javascript}</script>
-    </html>
-  `;
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setSrcDoc(
+        `
+          <html>
+          <body>${html}</body>
+          <style>${css}</style>
+          <script>${javascript}</script>
+          </html>
+        `
+      );
+      return () => clearTimeout(timeout);
+    }, 500);
+  }, [html, css, javascript]);
+
   return (
     <>
       <div className="pane top-pane">
@@ -37,6 +46,7 @@ function App() {
       </div>
       <div className="pane">
         <iframe
+          srcDoc={srcDoc}
           title="output"
           sandbox="allow-scripts"
           frameBorder="0"
