@@ -5,6 +5,14 @@ function App() {
   const [html, setHtml] = useState('');
   const [css, setCss] = useState('');
   const [javascript, setJavascript] = useState('');
+
+  const srcDoc = `
+    <html>
+    <body>${html}</body>
+    <style>${css}</style>
+    <script>${javascript}</script>
+    </html>
+  `;
   return (
     <>
       <div className="pane top-pane">
